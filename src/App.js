@@ -1,17 +1,23 @@
 import React, { Component } from "react";
-import { View, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Dimensions
+} from "react-native";
 import AddTodo from "./components/AddTodo";
-import UndoRedo from "./components/UndoRedo";
 import VisibleTodoList from "./components/VisibleTodoList";
-import Filter from "./components/Filter";
 
 export const RootContext = React.createContext("rootStore");
+
+const { width, height } = Dimensions.get("window");
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "Useless Placeholder",
       textInput: "",
       listItems: []
     };
@@ -24,7 +30,7 @@ export default class App extends Component {
           listItems: this.state.listItems,
           addTodo: todo => {
             const listItems = this.state.listItems;
-            const newListItems = [{ text: todo }, ...listItems];
+            const newListItems = [...listItems, { text: todo }];
             this.setState({
               listItems: newListItems
             });
@@ -32,13 +38,28 @@ export default class App extends Component {
         }}
         style={{ alignSelf: "center" }}
       >
+        <Text style={styles.title}>今年こそビーチへ行くためのタスク</Text>
         <AddTodo />
-        <Filter />
-        <UndoRedo />
-        <ScrollView>
-          <VisibleTodoList />
-        </ScrollView>
+        <View style={styles.row}>
+          <Image source={require("./assets/images/backgroundBeach.jpeg")} />
+          <ScrollView>
+            <VisibleTodoList />
+          </ScrollView>
+        </View>
+        <Text>
+          state管理にreduxでなく、reactの機能であるcontextを使いました。
+        </Text>
       </RootContext.Provider>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    paddingTop: 30
+  },
+  row: {
+    flexDirection: "row"
+  }
+});

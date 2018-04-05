@@ -1,14 +1,12 @@
-import React, { Component, createContext } from "react";
+import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { RootContext } from "../App";
 
 export default class VisibleTodoList extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "Useless Placeholder" };
+    this.state = { text: "" };
   }
-
-  list = () => <Text>okouue</Text>;
 
   renderItem = item => <Text style={styles.listItem}>{item.text}</Text>;
 
@@ -24,13 +22,10 @@ export default class VisibleTodoList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: "#d6d7da"
-  },
   listItem: {
-    fontSize: 20
+    fontSize: 20,
+    padding: 2,
+    letterSpacing: 1,
+    alignItems: "center"
   }
 });
