@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import AddTodo from "./components/AddTodo";
 import UndoRedo from "./components/UndoRedo";
 import VisibleTodoList from "./components/VisibleTodoList";
@@ -13,7 +13,7 @@ export default class App extends Component {
     this.state = {
       text: "Useless Placeholder",
       textInput: "",
-      listItem: []
+      listItems: []
     };
   }
 
@@ -21,22 +21,23 @@ export default class App extends Component {
     return (
       <RootContext.Provider
         value={{
-          text: this.state.text,
-          listItem: this.state.listItem,
+          listItems: this.state.listItems,
           addTodo: todo => {
-            const listItem = this.state.listItem;
-            const newListItem = [todo, ...listItem];
+            const listItems = this.state.listItems;
+            const newListItems = [{ text: todo }, ...listItems];
             this.setState({
-              listItem: newListItem
+              listItems: newListItems
             });
-            console.log(this.state.listItem);
           }
         }}
+        style={{ alignSelf: "center" }}
       >
         <AddTodo />
-        <VisibleTodoList />
         <Filter />
         <UndoRedo />
+        <ScrollView>
+          <VisibleTodoList />
+        </ScrollView>
       </RootContext.Provider>
     );
   }
